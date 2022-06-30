@@ -4,7 +4,7 @@ import logo from '../../Images/Logo/logo.png';
 const Header = () => {
     return (
         <div>
-            <div className="navbar bg-base-100 py-2 px-10 shadow-lg">
+            <div className="navbar bg-base-100 py-2 px-10  shadow-lg">
                 <div className="flex-1">
                     <Link to='/' className="normal-case text-xl">
                         <img className='w-20' src={logo} alt="power hack logo" />

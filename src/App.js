@@ -10,7 +10,8 @@ import 'react-toastify/dist/ReactToastify.css';
 function App() {
   return (
     <div>
-      <Header></Header>
+      <div className="sticky top-0 z-[99999999]"> <Header></Header></div>
+
 
       <Routes>
         <Route path="/" element={<Home></Home>}></Route>
