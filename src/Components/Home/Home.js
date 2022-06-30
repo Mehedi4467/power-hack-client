@@ -1,9 +1,10 @@
 import React from 'react';
+import BillingTop from './BillingTop';
 
 const Home = () => {
     return (
         <div>
-            This is home page
+            <BillingTop></BillingTop>
         </div>
     );
 };
