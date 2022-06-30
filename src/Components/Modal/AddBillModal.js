@@ -144,6 +144,31 @@ const AddBillModal = () => {
 
                                 </label>
                             </div>
+                            <div className="form-control w-full">
+                                <label className="label">
+                                    <span className="label-text">Pain Amount</span>
+                                </label>
+                                <input
+                                    type="number"
+                                    min='00'
+                                    placeholder="Paid Amount"
+                                    className="input input-bordered input-warning w-full"
+                                    {...register("amount", {
+                                        required: {
+                                            value: true,
+                                            message: "Paid Amount is required",
+                                        }
+
+                                    })}
+                                />
+                                <label className="label">
+                                    {errors.amount?.type === "required" && (
+                                        <span className="label-text-alt text-warning">
+                                            {errors.amount.message}
+                                        </span>
+                                    )}
+                                </label>
+                            </div>
                         </div>
 
                         <div className="modal-action">
