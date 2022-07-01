@@ -1,9 +1,10 @@
 import React from 'react';
 import BillDeleteModal from '../Modal/BillDeleteModal';
+import Pagination from '../Shared/Pagination/Pagination';
 import Spinner from '../Shared/Spinner';
 import Bills from './Bills';
 
-const BillingTable = ({ bill, setUpdateBill, setDeleteModal, deleteModal, loading }) => {
+const BillingTable = ({ totalItem, pageCount, bill, setCurrentPage, currentPage, setUpdateBill, setDeleteModal, deleteModal, loading }) => {
 
     if (loading) {
         return <Spinner></Spinner>
@@ -30,6 +31,11 @@ const BillingTable = ({ bill, setUpdateBill, setDeleteModal, deleteModal, loadin
                     </tbody>
                 </table>
             </div>
+            {
+                totalItem > 10 && <div className='flex my-6 justify-center md:justify-end'>
+                    <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} pageCount={pageCount}></Pagination>
+                </div>
+            }
             {
                 deleteModal && <BillDeleteModal setDeleteModal={setDeleteModal} deleteModal={deleteModal}></BillDeleteModal>
             }

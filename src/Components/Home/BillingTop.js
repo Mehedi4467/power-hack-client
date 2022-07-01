@@ -1,7 +1,7 @@
 import React from 'react';
 import AddBillModal from '../Modal/AddBillModal';
 
-const BillingTop = ({ setAddModalOpen, addModalopen, updateBill, setUpdateBill }) => {
+const BillingTop = ({ setSearch, setAddModalOpen, addModalopen, updateBill, setUpdateBill }) => {
 
     return (
 
@@ -11,7 +11,7 @@ const BillingTop = ({ setAddModalOpen, addModalopen, updateBill, setUpdateBill }
                     <h2 className="text-orange-500 font-bold text-sm md:text-lg uppercase ">Billings</h2>
 
                     <div className="form-control w-1/2 flex justify-center mx-auto">
-                        <input type="text" placeholder="Search" className="input rounded-full input-bordered" />
+                        <input onChange={(e) => setSearch(e.target.value)} type="text" placeholder="Search" className="input rounded-full input-bordered" />
                     </div>
                 </div>
 
