@@ -1,41 +1,45 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
+import ButtonSpinner from '../Shared/ButtonSpinner';
 
-const AddBillModal = () => {
+const AddBillModal = ({ setAddModalOpen }) => {
     const { register, formState: { errors }, handleSubmit, } = useForm();
+    const [loading, setLoading] = useState(false);
 
     const onSubmit = async (data) => {
+        setLoading(true);
         const displayName = data.name;
         const email = data.email;
-        const password = data.password;
+        const phone = data.phone;
+        const amount = data.amount;
 
 
-        const currentUser = {
-            email: email, password: password, name: displayName
+        const currentBill = {
+            email: email, phone: phone, amount: amount, name: displayName
         }
 
-        console.log(currentUser)
+        fetch(`http://localhost:5000/add-billing`, {
+            method: "POST",
+            headers: {
+                'content-type': 'application/json',
+                authorization: `Bearer ${localStorage.getItem('accessToken')}`
+            },
+            body: JSON.stringify(currentBill),
+        })
+            .then(res => res.json())
 
-        // fetch(`http://localhost:5000/adminUser/${email}`, {
-        //     method: "PUT",
-        //     headers: {
-        //         'content-type': 'application/json'
-        //     },
-        //     body: JSON.stringify(currentUser),
-        // })
-        //     .then(res => res.json())
-        //     .then((data) => {
+            .then((data) => {
+                setLoading(false)
+                if (data.acknowledged) {
+                    toast("You new bill Added Successfully");
+                    setAddModalOpen(false)
+                }
+            });
 
-        //         if (data.acknowledged) {
-
-        //         }
-        //     });
-
-
-
-        toast("You have been sent an email for verification! ")
     };
+
+
 
     return (
         <div>
@@ -172,7 +176,10 @@ const AddBillModal = () => {
                         </div>
 
                         <div className="modal-action">
-                            <button className="btn btn-primary">ADD Bill</button>
+                            {
+                                loading ? <ButtonSpinner></ButtonSpinner> : <button className="btn btn-primary">ADD Bill</button>
+                            }
+
                             <label htmlFor="add-bills-modal" className="btn btn-warning">Cencel</label>
                         </div>
 

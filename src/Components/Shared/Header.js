@@ -12,7 +12,7 @@ const Header = () => {
                 </div>
                 <div className="flex-none gap-2">
                     <div className="form-control">
-                        <p className='mr-10 font-semibold'>Paid Total : <span className='text-orange-500'>10000</span></p>
+                        <p className='mr-10 font-semibold'>Paid Total : <span className='text-orange-500'>10000 &#2547;</span></p>
                     </div>
                     <div className="dropdown dropdown-end">
                         <label tabIndex="0" className="btn btn-ghost btn-circle avatar">

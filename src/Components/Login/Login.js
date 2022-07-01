@@ -16,7 +16,7 @@ const Login = () => {
     const [token] = userToken(email);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
-    console.log(error)
+
     const {
         register,
         formState: { errors },
@@ -26,9 +26,7 @@ const Login = () => {
         setLoading(true)
         const email = data.email;
         const password = data.password;
-
         const currentUser = { email: email, password: password }
-
         fetch("http://localhost:5000/login", {
             method: "POST",
             headers: {
@@ -38,7 +36,7 @@ const Login = () => {
         })
             .then(res => res.json())
             .then((data) => {
-                console.log(data)
+
                 if (data?.user) {
 
                     setEmail(email);

@@ -11,8 +11,10 @@ import RequireAuth from "./Components/RequireAuth/RequireAuth";
 function App() {
   return (
     <div>
-      <div className="sticky top-0 z-[99999999]"> <Header></Header></div>
-
+      <div className="sticky top-0 z-[99999999]">
+        <Header></Header>
+        <ToastContainer />
+      </div>
 
       <Routes>
         <Route path="/" element={<RequireAuth><Home></Home></RequireAuth>}></Route>
@@ -20,7 +22,7 @@ function App() {
         <Route path="/reg" element={<Registration></Registration>}></Route>
         <Route path="*" element={<NotFound></NotFound>}></Route>
       </Routes>
-      <ToastContainer />
+
     </div>
   );
 }

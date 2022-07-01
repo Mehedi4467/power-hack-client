@@ -1,9 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 import BillDeleteModal from '../Modal/BillDeleteModal';
+import Spinner from '../Shared/Spinner';
+import Bills from './Bills';
 
-const BillingTable = () => {
+const BillingTable = ({ bill, setDeleteModal, deleteModal, loading }) => {
 
-    const [deleteModal, setDeleteModal] = useState(false)
+    if (loading) {
+        return <Spinner></Spinner>
+    }
     return (
         <div className='w-4/5 mx-auto mt-4'>
             <div className="overflow-x-auto">
@@ -20,79 +24,14 @@ const BillingTable = () => {
                     </thead>
                     <tbody>
 
-                        <tr>
-                            <th>ASNM22</th>
-                            <td>Md.Mehedi Hassan</td>
-                            <td>mehedihassan4467@gmail.com</td>
-                            <td>01521542122</td>
-                            <td>2000 &#2547;</td>
-                            <td>
-                                <div className='flex items-center justify-between'>
-                                    <i className="hover:text-orange-500 cursor-pointer fa-solid fa-pen-to-square"></i>
-
-                                    <label htmlFor="bill-delete-modal"> <i onClick={() => {
-                                        setDeleteModal(true)
-                                    }} className="hover:text-orange-500 cursor-pointer fa-solid fa-trash-can"></i></label>
-
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>ASNM22</th>
-                            <td>Md.Mehedi Hassan</td>
-                            <td>mehedihassan4467@gmail.com</td>
-                            <td>01521542122</td>
-                            <td>2000 &#2547;</td>
-                            <td>
-                                <div className='flex items-center justify-between'>
-                                    <i className="hover:text-orange-500 cursor-pointer fa-solid fa-pen-to-square"></i>
-
-                                    <label htmlFor="bill-delete-modal"> <i onClick={() => {
-                                        setDeleteModal(true)
-                                    }} className="hover:text-orange-500 cursor-pointer fa-solid fa-trash-can"></i></label>
-
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>ASNM22</th>
-                            <td>Md.Mehedi Hassan</td>
-                            <td>mehedihassan4467@gmail.com</td>
-                            <td>01521542122</td>
-                            <td>2000 &#2547;</td>
-                            <td>
-                                <div className='flex items-center justify-between'>
-                                    <i className="hover:text-orange-500 cursor-pointer fa-solid fa-pen-to-square"></i>
-
-                                    <label htmlFor="bill-delete-modal"> <i onClick={() => {
-                                        setDeleteModal(true)
-                                    }} className="hover:text-orange-500 cursor-pointer fa-solid fa-trash-can"></i></label>
-
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>ASNM22</th>
-                            <td>Md.Mehedi Hassan</td>
-                            <td>mehedihassan4467@gmail.com</td>
-                            <td>01521542122</td>
-                            <td>2000 &#2547;</td>
-                            <td>
-                                <div className='flex items-center justify-between'>
-                                    <i className="hover:text-orange-500 cursor-pointer fa-solid fa-pen-to-square"></i>
-
-                                    <label htmlFor="bill-delete-modal"> <i onClick={() => {
-                                        setDeleteModal(true)
-                                    }} className="hover:text-orange-500 cursor-pointer fa-solid fa-trash-can"></i></label>
-
-                                </div>
-                            </td>
-                        </tr>
+                        {
+                            bill.map(bil => <Bills key={bil} bil={bil} setDeleteModal={setDeleteModal}></Bills>)
+                        }
                     </tbody>
                 </table>
             </div>
             {
-                deleteModal && <BillDeleteModal></BillDeleteModal>
+                deleteModal && <BillDeleteModal setDeleteModal={setDeleteModal} deleteModal={deleteModal}></BillDeleteModal>
             }
         </div>
     );

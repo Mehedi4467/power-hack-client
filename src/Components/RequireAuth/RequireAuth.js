@@ -31,7 +31,7 @@ function RequireAuth({ children }) {
     if (!loading) {
         return <Spinner></Spinner>
     }
-    console.log(userInfo)
+
     if (!userInfo?.email) {
         return <Navigate to="/login" state={{ from: location }} replace />;
     }

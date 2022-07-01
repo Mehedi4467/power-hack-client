@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import AddBillModal from '../Modal/AddBillModal';
 
-const BillingTop = () => {
-    const [addModalopen, setAddModalOpen] = useState(false);
+const BillingTop = ({ setAddModalOpen, addModalopen }) => {
+
     return (
 
         <div className='bg-white mt-4'>
@@ -24,7 +24,7 @@ const BillingTop = () => {
                 </div>
             </div>
             {
-                addModalopen && <AddBillModal></AddBillModal>
+                addModalopen && <AddBillModal setAddModalOpen={setAddModalOpen}></AddBillModal>
             }
         </div>
 
