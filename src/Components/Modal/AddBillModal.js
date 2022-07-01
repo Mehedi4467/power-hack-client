@@ -24,7 +24,7 @@ const AddBillModal = ({ setAddModalOpen, updateBill, setUpdateBill }) => {
         }
 
         if (!updateBill) {
-            fetch(`http://localhost:5000/add-billing`, {
+            fetch(`https://hudson-syrup-16711.herokuapp.com/add-billing`, {
                 method: "POST",
                 headers: {
                     'content-type': 'application/json',
@@ -43,7 +43,7 @@ const AddBillModal = ({ setAddModalOpen, updateBill, setUpdateBill }) => {
                 });
         }
         else {
-            fetch(`http://localhost:5000/update-billing/${updateBill._id}`, {
+            fetch(`https://hudson-syrup-16711.herokuapp.com/update-billing/${updateBill._id}`, {
                 method: "PUT",
                 headers: {
                     'content-type': 'application/json',

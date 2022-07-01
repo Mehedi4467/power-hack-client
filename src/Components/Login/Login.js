@@ -27,7 +27,7 @@ const Login = () => {
         const email = data.email;
         const password = data.password;
         const currentUser = { email: email, password: password }
-        fetch("http://localhost:5000/login", {
+        fetch("https://hudson-syrup-16711.herokuapp.com/login", {
             method: "POST",
             headers: {
                 'content-type': 'application/json'

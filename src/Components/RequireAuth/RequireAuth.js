@@ -13,7 +13,7 @@ function RequireAuth({ children }) {
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-        fetch('http://localhost:5000/user/auth/me', {
+        fetch('https://hudson-syrup-16711.herokuapp.com/user/auth/me', {
             method: "GET",
             headers: {
                 authorization: `Bearer ${localStorage.getItem('accessToken')}`

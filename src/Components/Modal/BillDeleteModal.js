@@ -3,7 +3,7 @@ import { toast } from 'react-toastify';
 
 const BillDeleteModal = ({ deleteModal, setDeleteModal }) => {
     const handeldelete = id => {
-        fetch(`http://localhost:5000/delete-billing/${id}`, {
+        fetch(`https://hudson-syrup-16711.herokuapp.com/delete-billing/${id}`, {
             method: "DELETE",
             headers: {
                 authorization: `Bearer ${localStorage.getItem('accessToken')}`

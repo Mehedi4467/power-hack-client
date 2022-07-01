@@ -25,7 +25,7 @@ function App() {
   const [billMessage, setBillMessage] = useState(false);
   useEffect(() => {
 
-    fetch(`http://localhost:5000/billing-list?name=${search.toLocaleLowerCase()}&page=${currentPage - 1}`, {
+    fetch(`https://hudson-syrup-16711.herokuapp.com/billing-list?name=${search.toLocaleLowerCase()}&page=${currentPage - 1}`, {
       method: "GET",
       headers: {
         authorization: `Bearer ${localStorage.getItem('accessToken')}`
@@ -47,7 +47,7 @@ function App() {
   }, [addModalopen, deleteModal, updateBill, currentPage, search, billMessage])
 
   useEffect(() => {
-    fetch('http://localhost:5000/bill/count', {
+    fetch('https://hudson-syrup-16711.herokuapp.com/bill/count', {
       method: "GET",
       headers: {
         authorization: `Bearer ${localStorage.getItem('accessToken')}`

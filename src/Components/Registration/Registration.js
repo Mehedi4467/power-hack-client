@@ -26,7 +26,7 @@ const Registration = () => {
         const currentUser = {
             email: email, password: password, name: displayName
         }
-        fetch("http://localhost:5000/registration", {
+        fetch("https://hudson-syrup-16711.herokuapp.com/registration", {
             method: "POST",
             headers: {
                 'content-type': 'application/json'
