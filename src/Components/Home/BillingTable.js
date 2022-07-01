@@ -3,7 +3,7 @@ import BillDeleteModal from '../Modal/BillDeleteModal';
 import Spinner from '../Shared/Spinner';
 import Bills from './Bills';
 
-const BillingTable = ({ bill, setDeleteModal, deleteModal, loading }) => {
+const BillingTable = ({ bill, setUpdateBill, setDeleteModal, deleteModal, loading }) => {
 
     if (loading) {
         return <Spinner></Spinner>
@@ -25,7 +25,7 @@ const BillingTable = ({ bill, setDeleteModal, deleteModal, loading }) => {
                     <tbody>
 
                         {
-                            bill.map(bil => <Bills key={bil} bil={bil} setDeleteModal={setDeleteModal}></Bills>)
+                            bill.map(bil => <Bills setUpdateBill={setUpdateBill} key={bil._id} bil={bil} setDeleteModal={setDeleteModal}></Bills>)
                         }
                     </tbody>
                 </table>

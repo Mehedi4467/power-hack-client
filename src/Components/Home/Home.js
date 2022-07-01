@@ -8,6 +8,7 @@ const Home = () => {
     const [bill, setBill] = useState([]);
     const [loading, setLoading] = useState(true);
     const [addModalopen, setAddModalOpen] = useState(false);
+    const [updateBill, setUpdateBill] = useState(false);
     useEffect(() => {
 
         fetch('http://localhost:5000/billing-list', {
@@ -21,15 +22,15 @@ const Home = () => {
                 setBill(data);
                 setLoading(false);
             })
-    }, [addModalopen, deleteModal])
+    }, [addModalopen, deleteModal, updateBill])
 
     return (
         <div>
             <div className='sticky top-[90px] z-[99999999]'>
-                <BillingTop addModalopen={addModalopen} setAddModalOpen={setAddModalOpen}></BillingTop>
+                <BillingTop updateBill={updateBill} setUpdateBill={setUpdateBill} addModalopen={addModalopen} setAddModalOpen={setAddModalOpen}></BillingTop>
             </div>
 
-            <BillingTable loading={loading} setDeleteModal={setDeleteModal} deleteModal={deleteModal} bill={bill}></BillingTable>
+            <BillingTable setUpdateBill={setUpdateBill} loading={loading} setDeleteModal={setDeleteModal} deleteModal={deleteModal} bill={bill}></BillingTable>
 
         </div>
     );

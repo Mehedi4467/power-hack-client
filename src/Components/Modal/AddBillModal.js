@@ -1,10 +1,14 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import ButtonSpinner from '../Shared/ButtonSpinner';
 
-const AddBillModal = ({ setAddModalOpen }) => {
-    const { register, formState: { errors }, handleSubmit, } = useForm();
+const AddBillModal = ({ setAddModalOpen, updateBill, setUpdateBill }) => {
+    const { register, formState: { errors }, handleSubmit, } = useForm({
+        defaultValues: useMemo(() => {
+            return updateBill;
+        }, [updateBill])
+    });
     const [loading, setLoading] = useState(false);
 
     const onSubmit = async (data) => {
@@ -19,26 +23,45 @@ const AddBillModal = ({ setAddModalOpen }) => {
             email: email, phone: phone, amount: amount, name: displayName
         }
 
-        fetch(`http://localhost:5000/add-billing`, {
-            method: "POST",
-            headers: {
-                'content-type': 'application/json',
-                authorization: `Bearer ${localStorage.getItem('accessToken')}`
-            },
-            body: JSON.stringify(currentBill),
-        })
-            .then(res => res.json())
+        if (!updateBill) {
+            fetch(`http://localhost:5000/add-billing`, {
+                method: "POST",
+                headers: {
+                    'content-type': 'application/json',
+                    authorization: `Bearer ${localStorage.getItem('accessToken')}`
+                },
+                body: JSON.stringify(currentBill),
+            })
+                .then(res => res.json())
 
-            .then((data) => {
-                setLoading(false)
-                if (data.acknowledged) {
-                    toast("You new bill Added Successfully");
-                    setAddModalOpen(false)
-                }
-            });
+                .then((data) => {
+                    setLoading(false)
+                    if (data.acknowledged) {
+                        toast("You new bill Added Successfully");
+                        setAddModalOpen(false)
+                    }
+                });
+        }
+        else {
+            fetch(`http://localhost:5000/update-billing/${updateBill._id}`, {
+                method: "PUT",
+                headers: {
+                    'content-type': 'application/json',
+                    authorization: `Bearer ${localStorage.getItem('accessToken')}`
+                },
+                body: JSON.stringify(currentBill),
+            })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.acknowledged && data.modifiedCount > 0) {
+                        toast('Bill Update Successfully');
+                        setUpdateBill(false);
+                    }
+
+                });
+        }
 
     };
-
 
 
     return (
@@ -62,7 +85,9 @@ const AddBillModal = ({ setAddModalOpen }) => {
                                             value: true,
                                             message: "Name is required",
                                         },
+
                                     })}
+
                                 />
                                 <label className="label">
                                     {errors.name?.type === "required" && (
@@ -176,17 +201,22 @@ const AddBillModal = ({ setAddModalOpen }) => {
                         </div>
 
                         <div className="modal-action">
+
                             {
-                                loading ? <ButtonSpinner></ButtonSpinner> : <button className="btn btn-primary">ADD Bill</button>
+                                loading ? <ButtonSpinner></ButtonSpinner> : <div>
+                                    {
+                                        updateBill ? <button className="btn btn-primary">update Bill</button> : <button className="btn btn-primary">ADD Bill</button>
+                                    }
+                                </div>
                             }
 
-                            <label htmlFor="add-bills-modal" className="btn btn-warning">Cencel</label>
+                            <label onClick={() => setUpdateBill(false)} htmlFor="add-bills-modal" className="btn btn-warning">Cencel</label>
                         </div>
 
                     </form>
 
                 </div>
-            </div>
+            </div >
         </div >
     );
 };

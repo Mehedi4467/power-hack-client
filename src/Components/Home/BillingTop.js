@@ -1,7 +1,7 @@
 import React from 'react';
 import AddBillModal from '../Modal/AddBillModal';
 
-const BillingTop = ({ setAddModalOpen, addModalopen }) => {
+const BillingTop = ({ setAddModalOpen, addModalopen, updateBill, setUpdateBill }) => {
 
     return (
 
@@ -25,6 +25,9 @@ const BillingTop = ({ setAddModalOpen, addModalopen }) => {
             </div>
             {
                 addModalopen && <AddBillModal setAddModalOpen={setAddModalOpen}></AddBillModal>
+            }
+            {
+                updateBill && <AddBillModal updateBill={updateBill} setUpdateBill={setUpdateBill}></AddBillModal>
             }
         </div>
 
