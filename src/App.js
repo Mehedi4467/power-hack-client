@@ -6,6 +6,7 @@ import Header from "./Components/Shared/Header";
 import NotFound from "./Components/Shared/NotFound";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import RequireAuth from "./Components/RequireAuth/RequireAuth";
 
 function App() {
   return (
@@ -14,7 +15,7 @@ function App() {
 
 
       <Routes>
-        <Route path="/" element={<Home></Home>}></Route>
+        <Route path="/" element={<RequireAuth><Home></Home></RequireAuth>}></Route>
         <Route path="/login" element={<Login></Login>}></Route>
         <Route path="/reg" element={<Registration></Registration>}></Route>
         <Route path="*" element={<NotFound></NotFound>}></Route>

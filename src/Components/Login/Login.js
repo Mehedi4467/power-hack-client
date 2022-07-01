@@ -1,8 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import logo from "../../Images/Logo/logo.png";
-
+import Spinner from "../Shared/Spinner";
+import userToken from '../../Hook/useToken';
 
 
 const Login = () => {
@@ -10,26 +12,57 @@ const Login = () => {
     let location = useLocation();
     let from = location.state?.from?.pathname || "/";
     const navigate = useNavigate();
-    // const [token] = useToken(user);
+    const [email, setEmail] = useState('');
+    const [token] = userToken(email);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState('');
+    console.log(error)
     const {
         register,
         formState: { errors },
         handleSubmit,
     } = useForm();
     const onSubmit = (data) => {
+        setLoading(true)
         const email = data.email;
         const password = data.password;
-        console.log(email, password)
+
+        const currentUser = { email: email, password: password }
+
+        fetch("http://localhost:5000/login", {
+            method: "POST",
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(currentUser),
+        })
+            .then(res => res.json())
+            .then((data) => {
+                console.log(data)
+                if (data?.user) {
+
+                    setEmail(email);
+                    setLoading(false);
+                    toast("You Successfully login!! ");
+                }
+                else {
+                    setError(data.message);
+                    setLoading(false);
+                }
+            });
+
     };
 
 
-    // useEffect(() => {
-    //     if (token) {
-    //         navigate(from, { replace: true });
-    //     }
-    // }, [navigate, from, token]);
+    useEffect(() => {
+        if (token) {
+            navigate(from, { replace: true });
+        }
+    }, [navigate, from, token]);
 
-
+    if (loading) {
+        return <Spinner></Spinner>
+    }
     return (
         <div className=" flex justify-center items-center my-4">
             <div className="card w-full md:w-1/2  bg-base-100 shadow-xl">
@@ -39,13 +72,15 @@ const Login = () => {
                     </div>
                     <h2 className="card-title mx-auto mb-2 text-2xl">Login</h2>
 
-                    {/* {error ? (
+                    {error ? (
                         <p className="text-warning text-center mb-4 text-lg">
-                            {error?.message}
+                            {error}
                         </p>
                     ) : (
                         ""
-                    )} */}
+                    )}
+
+
                     <form onSubmit={handleSubmit(onSubmit)}>
                         <div>
                             <div className="form-control w-full">

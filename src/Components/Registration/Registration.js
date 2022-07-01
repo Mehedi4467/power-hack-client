@@ -1,69 +1,59 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import logo from "../../Images/Logo/logo.png";
-
+import userToken from '../../Hook/useToken';
+import Spinner from "../Shared/Spinner";
 
 
 const Registration = () => {
 
     const [Check, setCheck] = useState(true);
-
-    const {
-        register,
-        formState: { errors },
-        handleSubmit,
-    } = useForm();
-
-    // const [token] = userToken(user);
-
-    // const navigate = useNavigate();
-
+    const { register, formState: { errors }, handleSubmit } = useForm();
+    const [email, setEmail] = useState('');
+    const [token] = userToken(email);
+    const navigate = useNavigate();
+    const [loading, setLoading] = useState(false)
 
 
     const onSubmit = async (data) => {
+        setLoading(true)
         const displayName = data.name;
         const email = data.email;
         const password = data.password;
-
-
         const currentUser = {
             email: email, password: password, name: displayName
         }
-
-        console.log(currentUser)
-
-        // fetch(`http://localhost:5000/adminUser/${email}`, {
-        //     method: "PUT",
-        //     headers: {
-        //         'content-type': 'application/json'
-        //     },
-        //     body: JSON.stringify(currentUser),
-        // })
-        //     .then(res => res.json())
-        //     .then((data) => {
-
-        //         if (data.acknowledged) {
-
-        //         }
-        //     });
-
-
-
-        toast("You have been sent an email for verification! ")
+        fetch("http://localhost:5000/registration", {
+            method: "POST",
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(currentUser),
+        })
+            .then(res => res.json())
+            .then((data) => {
+                if (data.acknowledged) {
+                    toast("You Successfully Registration!! ");
+                    setEmail(email);
+                    setLoading(false)
+                }
+            });
     };
 
 
 
-    // useEffect(() => {
-    //     if (token) {
-    //         navigate('/');
-    //     }
-    // }, [navigate, token]);
+    useEffect(() => {
+        if (token) {
+            navigate('/');
+        }
+    }, [navigate, token]);
 
-
+    if (loading) {
+        return <Spinner></Spinner>
+    }
     return (
         <div className=" flex justify-center items-center my-4">
             <div className="card w-full md:w-1/2  bg-base-100 shadow-xl">
