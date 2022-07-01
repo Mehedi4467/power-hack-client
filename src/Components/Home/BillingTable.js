@@ -5,10 +5,11 @@ import Spinner from '../Shared/Spinner';
 import Bills from './Bills';
 
 const BillingTable = ({ totalItem, pageCount, bill, setCurrentPage, currentPage, setUpdateBill, setDeleteModal, deleteModal, loading }) => {
-
-    if (loading) {
+    console.log(bill)
+    if (loading || bill.message) {
         return <Spinner></Spinner>
     }
+
     return (
         <div className='w-4/5 mx-auto mt-4'>
             <div className="overflow-x-auto">
@@ -26,7 +27,7 @@ const BillingTable = ({ totalItem, pageCount, bill, setCurrentPage, currentPage,
                     <tbody>
 
                         {
-                            bill.map(bil => <Bills setUpdateBill={setUpdateBill} key={bil._id} bil={bil} setDeleteModal={setDeleteModal}></Bills>)
+                            bill?.map(bil => <Bills setUpdateBill={setUpdateBill} key={bil._id} bil={bil} setDeleteModal={setDeleteModal}></Bills>)
                         }
                     </tbody>
                 </table>

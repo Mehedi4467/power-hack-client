@@ -1,50 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import Spinner from '../Shared/Spinner';
 import BillingTable from './BillingTable';
 import BillingTop from './BillingTop';
 
 
-const Home = () => {
-    const [deleteModal, setDeleteModal] = useState(false)
-    const [bill, setBill] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [addModalopen, setAddModalOpen] = useState(false);
-    const [updateBill, setUpdateBill] = useState(false);
-    const [currentPage, setCurrentPage] = useState(1);
-    const [pageCount, setPageCount] = useState(0);
-    const [totalItem, setTotalItem] = useState(0);
-    const [search, setSearch] = useState('');
+const Home = ({ pageCount, setSearch, totalItem, currentPage, setCurrentPage, updateBill, setUpdateBill, deleteModal, setDeleteModal, bill, loading, addModalopen, setAddModalOpen }) => {
 
-    useEffect(() => {
 
-        fetch(`http://localhost:5000/billing-list?name=${search.toLocaleLowerCase()}&page=${currentPage - 1}`, {
-            method: "GET",
-            headers: {
-                authorization: `Bearer ${localStorage.getItem('accessToken')}`
-            }
-        })
-            .then(res => res.json())
-            .then(data => {
-                setBill(data);
-                setLoading(false);
-            })
-    }, [addModalopen, deleteModal, updateBill, currentPage, search])
 
-    useEffect(() => {
-        fetch('http://localhost:5000/bill/count', {
-            method: "GET",
-            headers: {
-                authorization: `Bearer ${localStorage.getItem('accessToken')}`
-            }
-        })
-            .then(res => res.json())
-            .then(data => {
-                const count = data.count;
-                const pages = Math.ceil(parseInt(count) / 10);
-                setPageCount(pages);
-                setTotalItem(count);
-            })
-    }, [bill]);
-
+    if (loading) {
+        return <Spinner></Spinner>
+    }
     return (
         <div>
             <div className='sticky top-[90px] z-[99999999]'>
